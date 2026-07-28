@@ -120,7 +120,7 @@ export default function CreateBusinessForm() {
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 bg-white shadow-xs">
-        <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-gray-50 transition-all duration-300">
+        <div className="relative flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-gray-50 transition-all duration-300">
           {previewUrl ? (
             <img
               src={previewUrl}
@@ -188,11 +188,11 @@ export default function CreateBusinessForm() {
           name="currency"
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger className="w-full h-11 flex items-center justify-between">
+              <SelectTrigger className="w-full py-5 flex items-center justify-between font-semibold">
                 <SelectValue />
               </SelectTrigger>
 
-              <SelectContent className="p-2">
+              <SelectContent className="p-2 font-semibold">
                 <SelectItem value="PHP" className="py-2 cursor-pointer">
                   PHP
                 </SelectItem>

@@ -1,12 +1,14 @@
-import { ChartColumn, ChartLine, Pyramid, ShieldCheck } from "lucide-react";
+import { ChartColumn, ChartLine, ShieldCheck } from "lucide-react";
 
 export default function AuthHero() {
   return (
     <div className="h-full flex flex-col gap-8">
       <header className="flex items-center gap-3 mb-auto">
-        <span className="rounded-full p-2 bg-prysm text-white">
-          <Pyramid />
-        </span>
+        <img
+          src="/images/logo.png"
+          alt="logo"
+          className="h-14 object-contain"
+        />
         <h3 className="font-semibold">PRYSM</h3>
       </header>
 

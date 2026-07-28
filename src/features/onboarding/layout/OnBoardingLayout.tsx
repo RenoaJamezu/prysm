@@ -1,4 +1,3 @@
-import { Pyramid } from "lucide-react";
 import type { ReactNode } from "react";
 
 interface OnboardingLayoutProps {
@@ -13,20 +12,22 @@ export default function OnboardingLayout({
   children,
 }: OnboardingLayoutProps) {
   return (
-    <main className="grid min-h-screen items-center justify-center bg-muted/30 p-6">
+    <main className="flex flex-col min-h-screen items-center justify-center bg-muted/30 p-6 gap-5">
       <header className="flex items-center gap-3 col">
-        <span className="rounded-full p-2 bg-prysm text-white">
-          <Pyramid />
-        </span>
-        <h3 className="font-semibold">PRYSM</h3>
+        <img
+          src="/images/logo.png"
+          alt="logo"
+          className="h-14 object-contain"
+        />
+        <h3 className="text-lg font-semibold">PRYSM</h3>
       </header>
 
-      <div>
-        <h1 className="text-3xl font-semibold">{title}</h1>
-        <p className="text-muted-foreground">{description}</p>
+      <div className="text-center">
+        <h1 className="text-2xl sm:text-3xl font-semibold">{title}</h1>
+        <p className="text-sm sm:text-md text-muted-foreground">{description}</p>
       </div>
 
-      <div className="rounded-3xl border bg-background p-10 shadow-sm">
+      <div className="rounded-3xl border bg-background p-4 sm:p-6 shadow-sm">
         {children}
       </div>
     </main>
