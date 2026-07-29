@@ -1,4 +1,4 @@
-import { LogOut, Settings } from "lucide-react";
+import { Building2, LogOut, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import {
@@ -17,6 +17,7 @@ import { useApp } from "@/app/providers/AppProvider";
 
 import { authService } from "@/services/auth.service";
 import { useAuth } from "@/providers/AuthProvider";
+import { toast } from "sonner";
 
 export default function BusinessMenu() {
   const { business } = useApp();
@@ -24,16 +25,21 @@ export default function BusinessMenu() {
 
   async function handleLogout() {
     await authService.signOut();
+    toast.success("Logout Successfully");
   }
 
   return (
     <div className="flex items-center gap-3">
-      <p className="truncate font-medium text-xl">{business?.name}</p>
+      <div className="flex items-center gap-2 py-1.5 px-4 bg-secondary rounded-full border border-secondary-foreground">
+        <Building2 size={20} />
+        
+        <p className="truncate font-medium text-sm sm:text-lg">{business?.name}</p>
+      </div>
 
       <div className="mt-1">
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Avatar className="h-10 w-10">
+            <Avatar className="h-12 w-12">
               <AvatarImage src={business?.logo_url ?? ""} />
 
               <AvatarFallback>
@@ -66,7 +72,7 @@ export default function BusinessMenu() {
             <DropdownMenuItem>
               <Link
                 to="/settings"
-                className="flex cursor-pointer items-center gap-2 text-[16px] font-semibold py-1"
+                className="flex cursor-pointer items-center gap-2 text-[16px] font-semibold py-1 w-full"
               >
                 <Settings size={16} />
                 Settings
