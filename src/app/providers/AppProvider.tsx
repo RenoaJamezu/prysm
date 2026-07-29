@@ -12,6 +12,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { businessService } from "@/features/onboarding/services/business.service";
 import type { Business } from "@/features/onboarding/types";
 import { Toaster } from "sonner";
+import { SidebarProvider } from "@/providers/SidebarProvider";
 
 type AppContextValue = {
   business: Business | null;
@@ -45,8 +46,16 @@ export function AppProvider({ children }: AppProviderProps) {
 
     try {
       const result = await businessService.getMine();
+      
+      if (!result) {
+        setBusiness(null);
+        return;
+      }
 
-      setBusiness(result);
+      setBusiness({
+        ...result,
+        logo_url: businessService.getLogoUrl(result.logo_url),
+      });
     } finally {
       setLoading(false);
     }
@@ -74,8 +83,10 @@ export function AppProvider({ children }: AppProviderProps) {
 
   return (
     <AppContext.Provider value={value}>
-      {children}
-      <Toaster position="top-right" />{" "}
+      <SidebarProvider>
+        {children}
+        <Toaster position="top-right" closeButton />{" "}
+      </SidebarProvider>
     </AppContext.Provider>
   );
 }

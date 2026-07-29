@@ -8,6 +8,8 @@ const BUCKET = "business-assets";
 export const businessService = {
   create,
   getMine,
+  uploadLogo,
+  getLogoUrl,
 };
 
 async function create(input: CreateBusinessInput): Promise<Business> {
@@ -115,4 +117,12 @@ async function uploadLogo(businessId: string, file: File): Promise<string> {
   }
 
   return path;
+}
+
+function getLogoUrl(path: string | null) {
+  if (!path) return null;
+
+  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+
+  return data.publicUrl;
 }

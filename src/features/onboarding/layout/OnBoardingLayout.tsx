@@ -1,3 +1,4 @@
+import AppLogo from "@/components/logo/AppLogo";
 import type { ReactNode } from "react";
 
 interface OnboardingLayoutProps {
@@ -14,12 +15,7 @@ export default function OnboardingLayout({
   return (
     <main className="flex flex-col min-h-screen items-center justify-center bg-muted/30 p-6 gap-5">
       <header className="flex items-center gap-3 col">
-        <img
-          src="/images/logo.png"
-          alt="logo"
-          className="h-14 object-contain"
-        />
-        <h3 className="text-lg font-semibold">PRYSM</h3>
+        <AppLogo />
       </header>
 
       <div className="text-center">

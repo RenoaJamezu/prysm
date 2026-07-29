@@ -1,15 +1,11 @@
+import AppLogo from "@/components/logo/AppLogo";
 import { ChartColumn, ChartLine, ShieldCheck } from "lucide-react";
 
 export default function AuthHero() {
   return (
     <div className="h-full flex flex-col gap-8">
       <header className="flex items-center gap-3 mb-auto">
-        <img
-          src="/images/logo.png"
-          alt="logo"
-          className="h-14 object-contain"
-        />
-        <h3 className="font-semibold">PRYSM</h3>
+        <AppLogo />
       </header>
 
       <div className="space-y-4">

@@ -10,9 +10,16 @@ import {
   RegisterPage,
   CreateBusinessPage,
   DashboardPage,
+  ProductsPage,
+  SalesPage,
+  InventoryPage,
+  QueuePage,
+  ReportsPage,
+  SettingsPage,
 } from "./lazy";
 
 import { PageLoader } from "@/components/LoadingPage";
+import AppLayout from "@/layout/AppLayout";
 
 function withSuspense(element: React.ReactNode) {
   return <Suspense fallback={<PageLoader />}>{element}</Suspense>;
@@ -45,13 +52,41 @@ export const router = createBrowserRouter([
         element: <BusinessRoute />,
         children: [
           {
-            index: true,
-            element: <Navigate to="/dashboard" replace />,
-          },
-
-          {
-            path: "dashboard",
-            element: withSuspense(<DashboardPage />),
+            element: <AppLayout />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="/dashboard" replace />,
+              },
+              {
+                path: "/dashboard",
+                element: withSuspense(<DashboardPage />),
+              },
+              {
+                path: "/products",
+                element: withSuspense(<ProductsPage />),
+              },
+              {
+                path: "/sales",
+                element: withSuspense(<SalesPage />),
+              },
+              {
+                path: "/inventory",
+                element: withSuspense(<InventoryPage />),
+              },
+              {
+                path: "/queue",
+                element: withSuspense(<QueuePage />),
+              },
+              {
+                path: "/reports",
+                element: withSuspense(<ReportsPage />),
+              },
+              {
+                path: "/settings",
+                element: withSuspense(<SettingsPage />),
+              },
+            ],
           },
         ],
       },
