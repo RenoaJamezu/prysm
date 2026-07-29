@@ -37,10 +37,10 @@ export default function LoginForm() {
     const { error } = await authService.signIn(data);
 
     if (error) {
-      toast.error("Incorrect email or password.", { id: "err-login-submit" });
+      toast.error(error.message, { id: "err-login-submit" });
+    } else {
+      toast.success("Welcome back");
     }
-
-    toast.success("Welcome back");
   }
 
   return (
