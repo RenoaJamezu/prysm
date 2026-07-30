@@ -8,6 +8,7 @@ const BUCKET = "business-assets";
 export const businessService = {
   create,
   getMine,
+  update,
   uploadLogo,
   getLogoUrl,
 };
@@ -65,6 +66,20 @@ async function create(input: CreateBusinessInput): Promise<Business> {
     ...business,
     logo_url: logoPath,
   } as Business;
+}
+
+async function update(id: string, input: Partial<CreateBusinessInput>): Promise<void> {
+  const { error } = await supabase
+    .from(TABLE)
+    .update({
+      name: input.name,
+      currency: input.currency,
+    })
+    .eq("id", id);
+
+  if (error) {
+    throw error;
+  }
 }
 
 async function getMine(): Promise<Business | null> {
