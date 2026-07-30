@@ -1,7 +1,7 @@
 import type { Category, Product } from "../../types";
 
-import ProductCard from "../cards/ProductCard";
-import ProductCardSkeleton from "../cards/ProductCardSkeleton";
+import ProductCard from "./ProductCard";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 import ProductEmptyState from "./ProductEmptyState";
 
 type ProductGridProps = {
