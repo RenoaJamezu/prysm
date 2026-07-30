@@ -33,6 +33,17 @@ export function usePagination<T>({
 
   function goTo(pageNumber: number) {
     setPage(Math.min(Math.max(pageNumber, 1), totalPages));
+
+    const container =
+      document.querySelector("main") ||
+      document.querySelector(".overflow-auto");
+
+    if (container) {
+      container.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   }
 
   return {
