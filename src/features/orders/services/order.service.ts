@@ -1,16 +1,20 @@
 import { supabase } from "@/lib/supabase";
 
 import type { CreateOrderInput, Order, OrderItem, OrderStatus } from "../types";
+import { createUniqueTicket } from "@/lib/generateTicket";
 
 const ORDERS_TABLE = "orders";
 const ORDER_ITEMS_TABLE = "order_items";
 
 export const orderService = {
   async create(input: CreateOrderInput): Promise<Order> {
+    const ticket = await createUniqueTicket();
+
     const { data: order, error: orderError } = await supabase
       .from(ORDERS_TABLE)
       .insert({
         business_id: input.business_id,
+        ticket_code: ticket,
         order_status: "preparing" satisfies OrderStatus,
         notes: input.notes,
         subtotal: input.subtotal,
