@@ -1,13 +1,13 @@
 import type { Product } from "@/features/products/types";
 
-export type OrderStatus = "preparing" | "ready" | "completed" | "cancelled";
+export type OrderStatus = "preparing" | "completed" | "cancelled";
 
 export interface Order {
   id: string;
 
   business_id: string;
 
-  order_number: number;
+  ticket_code: string;
 
   order_status: OrderStatus;
 
