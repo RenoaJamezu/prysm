@@ -98,7 +98,7 @@ export default function ProductsPage() {
           onManageCategories={() => setCategoryDialogOpen(true)}
         />
 
-        <div className="flex items-center justify-between">
+        <div className="grid space-y-2 sm:flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
             Showing{" "}
             <span className="font-medium">
