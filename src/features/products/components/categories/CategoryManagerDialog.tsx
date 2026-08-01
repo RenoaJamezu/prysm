@@ -33,7 +33,7 @@ export default function CategoryManagerDialog({
 }: CategoryManagerDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-2/5 overflow-auto">
+      <DialogContent className="sm:max-w-xl max-h-2/5 overflow-auto">
         <DialogHeader>
           <DialogTitle>Manage Categories</DialogTitle>
         </DialogHeader>
