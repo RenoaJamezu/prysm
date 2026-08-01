@@ -6,7 +6,11 @@ import { useApp } from "@/app/providers/AppProvider";
 import { productService } from "../services/product.service";
 import type { Product, ProductInput } from "../types";
 
-export function useProducts() {
+type UseProductsOptions = {
+  visibleOnly?: boolean;
+};
+
+export function useProducts({ visibleOnly = false }: UseProductsOptions = {}) {
   const { business } = useApp();
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -23,7 +27,9 @@ export function useProducts() {
     setLoading(true);
 
     try {
-      const result = await productService.getAll(business.id);
+      const result = visibleOnly
+        ? await productService.getVisible(business.id)
+        : await productService.getAll(business.id);
 
       setProducts(result);
     } catch (error) {
@@ -33,7 +39,7 @@ export function useProducts() {
     } finally {
       setLoading(false);
     }
-  }, [business]);
+  }, [business, visibleOnly]);
 
   useEffect(() => {
     refresh();

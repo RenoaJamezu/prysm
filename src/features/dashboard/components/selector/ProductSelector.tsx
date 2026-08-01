@@ -15,7 +15,9 @@ type ProductSelectorProps = {
 };
 
 export default function ProductSelector({ onSelect }: ProductSelectorProps) {
-  const { products, loading: productsLoading } = useProducts();
+  const { products, loading: productsLoading } = useProducts({
+    visibleOnly: true,
+  });
 
   const { categories } = useCategories();
 

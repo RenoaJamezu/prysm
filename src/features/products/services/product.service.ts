@@ -7,6 +7,7 @@ const BUCKET = "product-assets";
 
 export const productService = {
   getAll,
+  getVisible,
   create,
   update,
   remove,
@@ -29,6 +30,22 @@ async function getAll(businessId: string): Promise<Product[]> {
   if (error) {
     throw error;
   }
+
+  return data as Product[];
+}
+
+async function getVisible(businessId: string): Promise<Product[]> {
+  const { data, error } = await supabase
+    .from(TABLE)
+    .select("*")
+    .eq("business_id", businessId)
+    .eq("is_visible", true)
+    .is("deleted_at", null)
+    .order("created_at", {
+      ascending: false,
+    });
+
+  if (error) throw error;
 
   return data as Product[];
 }
