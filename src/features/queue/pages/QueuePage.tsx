@@ -8,27 +8,16 @@ import QueueBoard from "../components/QueueBoard";
 
 import { Button } from "@/components/ui/button";
 
-const STATUSES: {
-  label: string;
-  value: OrderStatus | "all";
-}[] = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Preparing",
-    value: "preparing",
-  },
-  {
-    label: "Completed",
-    value: "completed",
-  },
-  {
-    label: "Cancelled",
-    value: "cancelled",
-  },
-];
+function isToday(date: string) {
+  const today = new Date();
+  const value = new Date(date);
+
+  return (
+    today.getFullYear() === value.getFullYear() &&
+    today.getMonth() === value.getMonth() &&
+    today.getDate() === value.getDate()
+  );
+}
 
 export default function QueuePage() {
   const { orders, loading, updateStatus } = useQueue();
@@ -37,13 +26,59 @@ export default function QueuePage() {
     "preparing",
   );
 
+  const todayOrders = useMemo(
+    () => orders.filter((order) => isToday(order.created_at)),
+    [orders],
+  );
+
+  const counts = useMemo(
+    () => ({
+      preparing: orders.filter((o) => o.order_status === "preparing").length,
+
+      completed: todayOrders.filter((o) => o.order_status === "completed")
+        .length,
+
+      cancelled: todayOrders.filter((o) => o.order_status === "cancelled")
+        .length,
+    }),
+    [orders, todayOrders],
+  );
+
   const filteredOrders = useMemo(() => {
-    if (selectedStatus === "all") {
-      return orders;
+    let data = orders;
+
+    if (selectedStatus !== "all") {
+      data = data.filter((order) => order.order_status === selectedStatus);
     }
 
-    return orders.filter((order) => order.order_status === selectedStatus);
+    if (selectedStatus === "completed" || selectedStatus === "cancelled") {
+      data = data.filter((order) => isToday(order.created_at));
+    }
+
+    return [...data].sort(
+      (a, b) =>
+        new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+    );
   }, [orders, selectedStatus]);
+
+  const statuses = [
+    {
+      label: "All",
+      value: "all",
+    },
+    {
+      label: `Preparing (${counts.preparing})`,
+      value: "preparing",
+    },
+    {
+      label: `Completed (${counts.completed})`,
+      value: "completed",
+    },
+    {
+      label: `Cancelled (${counts.cancelled})`,
+      value: "cancelled",
+    },
+  ] as const;
 
   return (
     <div className="space-y-6">
@@ -56,7 +91,7 @@ export default function QueuePage() {
       </div>
 
       <div className="flex flex-wrap gap-3">
-        {STATUSES.map((status) => (
+        {statuses.map((status) => (
           <Button
             key={status.value}
             variant={selectedStatus === status.value ? "default" : "outline"}

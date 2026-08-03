@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { supabase } from "@/lib/supabase";
+
 import { useApp } from "@/app/providers/AppProvider";
 
 import type { OrderStatus } from "@/features/orders/types";
 
 import { queueService } from "../services/queue.service";
 import type { QueueOrderWithItems } from "../types";
+import { playNewOrderSound } from "@/lib/sound";
 
 export function useQueue() {
   const { business } = useApp();
@@ -37,13 +40,35 @@ export function useQueue() {
 
   useEffect(() => {
     refresh();
-
-    const interval = window.setInterval(() => {
-      refresh();
-    }, 5000);
-
-    return () => window.clearInterval(interval);
   }, [refresh]);
+
+  useEffect(() => {
+    if (!business) return;
+
+    const channel = supabase
+      .channel(`orders-${business.id}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "orders",
+          filter: `business_id=eq.${business.id}`,
+        },
+        async (payload) => {
+          if (payload.eventType === "INSERT") {
+            playNewOrderSound();
+          }
+
+          await refresh();
+        },
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [business, refresh]);
 
   async function updateStatus(orderId: string, status: OrderStatus) {
     try {
