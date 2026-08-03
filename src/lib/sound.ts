@@ -1,48 +1,70 @@
-let newOrderAudio: HTMLAudioElement | null = null;
-let completedAudio: HTMLAudioElement | null = null;
-let cancelledAudio: HTMLAudioElement | null = null;
+type SoundType = "new-order" | "completed" | "cancelled";
 
-function getNewOrderAudio() {
-  if (!newOrderAudio) {
-    newOrderAudio = new Audio("/sounds/new-order.mp3");
+class SoundManager {
+  private unlocked = false;
+
+  private readonly sounds: Record<SoundType, HTMLAudioElement> = {
+    "new-order": this.createAudio("/sounds/new-order.mp3"),
+    completed: this.createAudio("/sounds/completed.mp3"),
+    cancelled: this.createAudio("/sounds/cancelled.mp3"),
+  };
+
+  private createAudio(src: string) {
+    const audio = new Audio(src);
+
+    audio.preload = "auto";
+
+    return audio;
   }
 
-  return newOrderAudio;
-}
+  async unlock() {
+    if (this.unlocked) return;
 
-function getCompletedAudio() {
-  if (!completedAudio) {
-    completedAudio = new Audio("/sounds/completed.mp3");
+    this.unlocked = true;
+
+    for (const audio of Object.values(this.sounds)) {
+      try {
+        audio.muted = true;
+
+        await audio.play();
+
+        audio.pause();
+        audio.currentTime = 0;
+
+        audio.muted = false;
+      } catch (error) {
+        console.warn("Unable to unlock audio.", error);
+      }
+    }
   }
 
-  return completedAudio;
-}
+  async play(type: SoundType) {
+    const audio = this.sounds[type];
 
-function getCancelledAudio() {
-  if (!cancelledAudio) {
-    cancelledAudio = new Audio("/sounds/cancelled.mp3");
+    if (!audio) return;
+
+    try {
+      audio.pause();
+
+      audio.currentTime = 0;
+
+      await audio.play();
+    } catch (error) {
+      console.warn(`Unable to play "${type}" sound.`, error);
+    }
   }
 
-  return cancelledAudio;
-}
+  playNewOrder() {
+    return this.play("new-order");
+  }
 
-async function play(audio: HTMLAudioElement) {
-  try {
-    audio.currentTime = 0;
-    await audio.play();
-  } catch {
-    // Ignore autoplay errors
+  playCompleted() {
+    return this.play("completed");
+  }
+
+  playCancelled() {
+    return this.play("cancelled");
   }
 }
 
-export function playNewOrderSound() {
-  return play(getNewOrderAudio());
-}
-
-export function playCompletedSound() {
-  return play(getCompletedAudio());
-}
-
-export function playCancelledSound() {
-  return play(getCancelledAudio());
-}
+export const sound = new SoundManager();

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 
 import { useApp } from "@/app/providers/AppProvider";
-import { playCancelledSound, playCompletedSound } from "@/lib/sound";
+import { sound } from "@/lib/sound";
 
 export function useOrderNotifications() {
   const { business } = useApp();
@@ -36,7 +36,7 @@ export function useOrderNotifications() {
             oldOrder.order_status === "preparing" &&
             newOrder.order_status === "completed"
           ) {
-            playCompletedSound();
+            sound.playCompleted();
 
             toast.success(`Ticket ${newOrder.ticket_code} is ready.`);
           }
@@ -45,7 +45,7 @@ export function useOrderNotifications() {
             oldOrder.order_status === "preparing" &&
             newOrder.order_status === "cancelled"
           ) {
-            playCancelledSound();
+            sound.playCancelled();
 
             toast.error(`Ticket ${newOrder.ticket_code} was cancelled.`);
           }
