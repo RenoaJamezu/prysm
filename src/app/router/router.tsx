@@ -11,10 +11,8 @@ import {
   CreateBusinessPage,
   DashboardPage,
   ProductsPage,
-  SalesPage,
-  InventoryPage,
   QueuePage,
-  ReportsPage,
+  AnalyticsPage,
   SettingsPage,
 } from "./lazy";
 
@@ -67,20 +65,12 @@ export const router = createBrowserRouter([
                 element: withSuspense(<ProductsPage />),
               },
               {
-                path: "/sales",
-                element: withSuspense(<SalesPage />),
-              },
-              {
-                path: "/inventory",
-                element: withSuspense(<InventoryPage />),
-              },
-              {
                 path: "/queue",
                 element: withSuspense(<QueuePage />),
               },
               {
-                path: "/reports",
-                element: withSuspense(<ReportsPage />),
+                path: "/analytics",
+                element: withSuspense(<AnalyticsPage />),
               },
               {
                 path: "/settings",

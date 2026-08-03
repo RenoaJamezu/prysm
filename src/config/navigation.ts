@@ -1,10 +1,8 @@
 import {
   BarChart3,
-  Boxes,
   ClipboardList,
   LayoutDashboard,
   Package,
-  ShoppingCart,
 } from "lucide-react";
 
 export const navigation = [
@@ -19,28 +17,13 @@ export const navigation = [
     icon: Package,
   },
   {
-    label: "Sales",
-    href: "/sales",
-    icon: ShoppingCart,
-  },
-  {
-    label: "Inventory",
-    href: "/inventory",
-    icon: Boxes,
-  },
-  {
     label: "Queue",
     href: "/queue",
     icon: ClipboardList,
   },
   {
-    label: "Reports",
-    href: "/reports",
+    label: "Analytics",
+    href: "/analytics",
     icon: BarChart3,
   },
-  // {
-  //   label: "Settings",
-  //   href: "/settings",
-  //   icon: Settings,
-  // },
 ] as const;
