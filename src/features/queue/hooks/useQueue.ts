@@ -30,8 +30,6 @@ export function useQueue() {
 
       setOrders(result);
     } catch (error) {
-      console.error(error);
-
       toast.error("Failed to load queue.");
     } finally {
       setLoading(false);
@@ -87,8 +85,6 @@ export function useQueue() {
 
       toast.success("Order updated.");
     } catch (error) {
-      console.error(error);
-
       toast.error("Failed to update order.");
     }
   }

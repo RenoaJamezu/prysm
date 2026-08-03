@@ -110,7 +110,6 @@ export default function CreateBusinessForm() {
       toast.success("Business created successfully.");
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      console.error(error);
       toast.error("Unable to create your business.", {
         id: "submit-error",
       });

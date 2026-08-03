@@ -53,8 +53,6 @@ export default function DashboardPage() {
 
       clear();
     } catch (error: any) {
-      console.error("Order creation failed:", error);
-
       const message =
         error?.response?.data?.message ||
         error?.message ||
