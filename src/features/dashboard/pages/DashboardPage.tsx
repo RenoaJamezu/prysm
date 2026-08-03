@@ -9,9 +9,11 @@ import ProductSelector from "../components/selector/ProductSelector";
 import CurrentOrder from "../components/cart/CurrentOrder";
 
 import { useCartStore } from "../stores/cart.store";
+import { useOrderNotifications } from "@/features/queue/hooks/useOrderNotifications";
 
 export default function DashboardPage() {
   const { business } = useApp();
+  useOrderNotifications();
 
   const { createOrder, loading: saving } = useOrders();
 
@@ -49,7 +51,6 @@ export default function DashboardPage() {
         ),
       });
 
-      toast.success("Order saved successfully!");
       clear();
     } catch (error: any) {
       console.error("Order creation failed:", error);
