@@ -9,7 +9,7 @@ import type { OrderStatus } from "@/features/orders/types";
 
 import { queueService } from "../services/queue.service";
 import type { QueueOrderWithItems } from "../types";
-import { playNewOrderSound } from "@/lib/sound";
+import { sound } from "@/lib/sound";
 
 export function useQueue() {
   const { business } = useApp();
@@ -55,7 +55,7 @@ export function useQueue() {
         },
         async (payload) => {
           if (payload.eventType === "INSERT") {
-            playNewOrderSound();
+            sound.playNewOrder();
           }
 
           await refresh();
