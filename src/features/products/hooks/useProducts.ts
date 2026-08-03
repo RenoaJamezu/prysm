@@ -33,8 +33,6 @@ export function useProducts({ visibleOnly = false }: UseProductsOptions = {}) {
 
       setProducts(result);
     } catch (error) {
-      console.error(error);
-
       toast.error("Failed to load products.");
     } finally {
       setLoading(false);
@@ -59,8 +57,6 @@ export function useProducts({ visibleOnly = false }: UseProductsOptions = {}) {
 
       return product;
     } catch (error) {
-      console.error(error);
-
       toast.error("Failed to create product.");
 
       throw error;
@@ -83,8 +79,6 @@ export function useProducts({ visibleOnly = false }: UseProductsOptions = {}) {
 
       return updated;
     } catch (error) {
-      console.error(error);
-
       toast.error("Failed to update product.");
 
       throw error;
@@ -101,8 +95,6 @@ export function useProducts({ visibleOnly = false }: UseProductsOptions = {}) {
 
       toast.success("Product deleted.");
     } catch (error) {
-      console.error(error);
-
       toast.error("Failed to delete product.");
 
       throw error;

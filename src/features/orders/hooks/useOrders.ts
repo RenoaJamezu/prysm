@@ -18,8 +18,6 @@ export function useOrders() {
 
       return order;
     } catch (error) {
-      console.error(error);
-
       toast.error("Unable to save order.");
 
       throw error;
